@@ -73,3 +73,6 @@ acommon/common-domain/src/main/java/com/food/ordering/system/domain/exception/Do
 ~order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/event/OrderEvent.java,e\4\e4ee778e0dda8d79545384ea60c3b4a90f357351
 ±
 €order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/OrderDomainService.java,3\2\3229f04078864c5432d61851ffd6f22901baebaa
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
