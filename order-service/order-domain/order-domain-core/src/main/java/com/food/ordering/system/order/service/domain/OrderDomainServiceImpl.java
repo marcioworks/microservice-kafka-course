@@ -14,16 +14,17 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
-public class OrderDomainServiceImpl implements OrderDomainService{
+public class OrderDomainServiceImpl implements OrderDomainService {
 
     private final String UTC = "UTC";
+
     @Override
     public OrderCreatedEvent validateAndInitializeOrder(Order order, Restaurant restaurant) {
         validateRestaurant(restaurant);
-        setOrderProductInformation(order,restaurant);
+        setOrderProductInformation(order, restaurant);
         order.validateOrder();
         order.initializeOrder();
-        log.info("order with id {} initialized",order.getId().getValue());
+        log.info("order with id {} initialized", order.getId().getValue());
         return new OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
     }
 
@@ -44,7 +45,7 @@ public class OrderDomainServiceImpl implements OrderDomainService{
     public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
         order.initCancel(failureMessages);
         log.info("Order payment is cancelling for id: {} ", order.getId().getValue());
-        return new OrderCancelledEvent(order,ZonedDateTime.now(ZoneId.of(UTC)));
+        return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
     }
 
     @Override
@@ -54,8 +55,8 @@ public class OrderDomainServiceImpl implements OrderDomainService{
     }
 
     private void validateRestaurant(Restaurant restaurant) {
-        if(!restaurant.isActive()){
-            throw new OrderDomainException("Restaurant with id "+ restaurant.getId().getValue() +
+        if (!restaurant.isActive()) {
+            throw new OrderDomainException("Restaurant with id " + restaurant.getId().getValue() +
                     " is Currently not active");
         }
     }
@@ -63,8 +64,8 @@ public class OrderDomainServiceImpl implements OrderDomainService{
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
         order.getItems().forEach(orderItem -> restaurant.getProductList().forEach(restaurantProduct -> {
             Product currentProduct = orderItem.getProduct();
-            if(currentProduct.equals(restaurantProduct)){
-                currentProduct.updateWithConfirmedNameAndPrice(restaurantProduct.getName(),restaurantProduct.getPrice());
+            if (currentProduct.equals(restaurantProduct)) {
+                currentProduct.updateWithConfirmedNameAndPrice(restaurantProduct.getName(), restaurantProduct.getPrice());
             }
         }));
     }

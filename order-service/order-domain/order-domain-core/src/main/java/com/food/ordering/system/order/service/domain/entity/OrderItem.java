@@ -22,6 +22,9 @@ public class OrderItem extends BaseEntity<OrderItemId> {
         subtotal = builder.subtotal;
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
     boolean isPriceValid(){
         return price.isGreaterThanZero() &&
                 price.equals(product.getPrice()) &&
